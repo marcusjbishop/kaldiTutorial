@@ -1,0 +1,9 @@
+As a running example throughout this document, we will refer
+to the freely available \verb!iban! dataset.
+The corpus consists of a number of hours of
+news speech in the Iban language,
+provided by a local radio station in Sarawak, Malaysia.
+
+We encourage the reader to try running the recipe in \verb!egs/iban/s5!,
+while will automatically fetch the dataset from
+\url{http://www.openslr.org}.
