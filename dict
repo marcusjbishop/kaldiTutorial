@@ -50,3 +50,5 @@ In the case of \verb!iban! the pronounciations were provided
 in the dataset. Another choice is to write them by hand.
 Still another choice is to simply use the sequence of
 letters of the word as a surrogate for its pronounciation.
+This works well in languages in which each letter is always
+pronounced in the same way, such as Spanish or German.
