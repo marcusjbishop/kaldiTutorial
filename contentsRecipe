@@ -1,0 +1,31 @@
+The purpose of a recipe is to take a raw dataset
+and convert it into a complete ASR system.
+The name of the recipe usually reflects the dataset.
+For example, the Wallstreet Journal
+is implemented as \verb!egs/wsj!.
+
+As mentioned above, the main steps of a recipe are implemented
+as \verb!bash! scripts in the \verb!steps! and \verb!utils!
+subdirectories of the recipe. Typically these are symbolic
+links to the corresponding directories of the Wallstreet Journal recipe,
+\verb!egs/wsj!. The exact sequence of steps to be taken 
+in converting the dataset to an ASR system is given
+by the main script, \verb!run.sh! appearing at the root level
+of the recipe, alongside \verb!steps! and \verb!utils!.
+
+Every dataset typically arrives in a format differnt from all previously
+seen datasets. Therefore, one typically handcrafts a variety of programs,
+usually in \textsf{Python}, \textsf{Perl}, or \verb!bash! to convert
+the data to the form needed by subsequent parts of the pipeline.
+These scripts are usually found in the \verb!local! directory.
+
+Also at the root level one typically finds two additional files.
+\verb!path.sh! sets up execution paths
+in such a way that the scripts in
+\verb!bash! scripts in the \verb!steps! and \verb!utils!
+will be able to locate relevant executables.
+\verb!cmd.sh! is used to select how multiprocess jobs
+will be called. The file simply sets a variable to one 
+of \verb!run.pl! (for local exectuion) or \verb!queue.pl!
+(for execution by multiple nodes of a cluster)
+\verb!cmd.sh! and \verb!path.sh! should not be executed, but {\em sourced}.
