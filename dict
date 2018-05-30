@@ -1,0 +1,52 @@
+Next we prepare the pronounciation dictionary, which
+we will assume is located at \verb!data/local/dict!, so all the files
+described below will be assumed to reside in this directory.
+
+First one prepares a file \verb!lexicon.txt! specifying
+the pronounciations some subset
+of the words found in \verb!data/train/text!.
+Naturally one is most interested in pronounciations
+of the most common words, so it would be natural
+to first order all the words of \verb!data/train/text! by
+their frequency, and then select, say, the 10,000 most common
+to be included in \verb!lexicon.txt!.
+
+On each line the file gives a word, followed by a space or tab,
+followed by a sequence of phones, represented by tokens from a fixed
+pronounciation alphabet.
+For example, the first ten lines of \verb!lexicon.txt! are shown
+below, for \verb!iban! on the left, and \verb!wsj! on the right.
+
+\begin{multicols}{2}
+\begin{verbatim}
+<sil>   SIL
+<UNK>   SIL
+ke      k @
+nya     NJ a KK
+iya     i j a
+ba      b a KK
+dua     d u w a
+sida    s i d a KK
+puluh   p u l u @ h
+raban   r a b a n
+\end{verbatim}
+\begin{verbatim}
+A42128  EY1 F AO1 R T UW1 W AH1 N T UW1 EY1 T
+AAA  T R IH2 P AH0 L EY1
+AABERG  AA1 B ER0 G
+AACHEN  AA1 K AH0 N
+AACHENER  AA1 K AH0 N ER0
+A  AH0
+AAKER  AA1 K ER0
+AALSETH  AA1 L S EH0 TH
+AAMODT  AA1 M AH0 T
+AANCOR  AA1 N K AO2 R
+\end{verbatim}
+\end{multicols}
+
+In the case of \verb!wsj! the pronounciations were extracted
+from a dictionary downloaded from \verb!cmu.edu!.
+In the case of \verb!iban! the pronounciations were provided
+in the dataset. Another choice is to write them by hand.
+Still another choice is to simply use the sequence of
+letters of the word as a surrogate for its pronounciation.
