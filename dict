@@ -1,6 +1,6 @@
 Next we prepare the pronounciation dictionary, which
-we will assume is located at \verb!data/local/dict!, so all the files
-described below will be assumed to reside in this directory.
+we will assume to be located at \verb!data/local/dict!, so all the files
+described below will be assumed to reside in that directory.
 
 First one prepares a file \verb!lexicon.txt! specifying
 the pronounciations some subset
@@ -8,10 +8,10 @@ of the words found in \verb!data/train/text!.
 Naturally one is most interested in pronounciations
 of the most common words, so it would be natural
 to first order all the words of \verb!data/train/text! by
-their frequency, and then select, say, the 10,000 most common
+their frequencies, and then select, say, the 10,000 most common
 to be included in \verb!lexicon.txt!.
 
-On each line the file gives a word, followed by a space or tab,
+Each line the file contains a word, followed by a space or tab,
 followed by a sequence of phones, represented by tokens from a fixed
 pronounciation alphabet.
 For example, the first ten lines of \verb!lexicon.txt! are shown
@@ -45,9 +45,11 @@ AANCOR  AA1 N K AO2 R
 \end{multicols}
 
 In the case of \verb!wsj! the pronounciations were extracted
-from a dictionary downloaded from \verb!cmu.edu!.
+from a dictionary that \verb!run.sh! downloaded from \verb!cmu.edu!.
 In the case of \verb!iban! the pronounciations were provided
-in the dataset. Another choice is to write them by hand.
+in the dataset. Another choice is to write them by hand,
+in which case \verb!run.sh! would {\em not} create the file
+\verb!lexicon.txt! as it does in the examples above.
 Still another choice is to simply use the sequence of
 letters of the word as a surrogate for its pronounciation.
 This works well in languages in which each letter is always

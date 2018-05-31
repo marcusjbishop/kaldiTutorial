@@ -13,10 +13,17 @@ in \verb!egs/iban/s5!.
 \begin{verbatim}
 ./run.sh 2>&1 | tee log
 \end{verbatim}
-This will join the standard output and standard error and save
-them to the file \verb!log! for later inspection, while also printing
+This will merge the standard output and standard error and save
+them both to the file \verb!log! for later inspection, while also printing
 the same output the your screen.
 You also might find it convenient to run \verb!screen!
 before the command above. Then if your session becomes interrupted,
 you can return later to the same machine and resume with
 \verb!screen -r!.
+
+The command above will take two or three hours to complete.
+If it completes correctly, you can also run the following
+command to train the neural-network part of the process.
+\begin{verbatim}
+./local/chain/run_tdnn.sh 2>&1 | tee run-tdnn.log
+\end{verbatim}
