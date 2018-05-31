@@ -1,9 +1,22 @@
-As a running example throughout this document, we will refer
-to the freely available \verb!iban! dataset.
+As a running example, we will reference
+the freely available \verb!iban! dataset
+\cite{Juan14,Juan2015}.
 The corpus consists of a number of hours of
 news speech in the Iban language,
 provided by a local radio station in Sarawak, Malaysia.
 
 We encourage the reader to try running the recipe in \verb!egs/iban/s5!,
 while will automatically fetch the dataset from
-\url{http://www.openslr.org}.
+\href{http://www.openslr.org}{\texttt{openslr.org}}.
+A nice way to run the recipe is to run the following command
+in \verb!egs/iban/s5!.
+\begin{verbatim}
+./run.sh 2>&1 | tee log
+\end{verbatim}
+This will join the standard output and standard error and save
+them to the file \verb!log! for later inspection, while also printing
+the same output the your screen.
+You also might find it convenient to run \verb!screen!
+before the command above. Then if your session becomes interrupted,
+you can return later to the same machine and resume with
+\verb!screen -r!.

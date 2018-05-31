@@ -1,10 +1,11 @@
 The main ingredient in an ASR system
 is a large corpus of transcribed recordings of people speaking.
-After the preparation of this data, the main steps are the constructions
+After this data as been assembled and prepared,
+the main steps are the constructions
 of a {\em language model}, a {\em pronunciation lexicon}, and an
 {\em acoustic model}.
 In \textsf{Kaldi} all these steps are implemented using
 {\em finite state transducers}.
 With these models in place, new audio samples
-are can be transcribed with the help of a {\em decoding graph}.
+can be transcribed with the help of a {\em decoding graph}.
 All of these steps are described in more detail below.

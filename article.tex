@@ -1,6 +1,8 @@
 \documentclass[12pt]{article}
 \usepackage{charter,fullpage,multicol}
 \usepackage[colorlinks=true]{hyperref}
+\usepackage[numbers,sort&compress,]{natbib}
+\usepackage[euler-digits]{eulervm}
 \title{Using \texttt{Kaldi}, a tutorial}
 \author{Sanjeev Khudanpur, Marcus Bishop}
 \begin{document}
@@ -23,4 +25,7 @@
 \input{dataPrep}
 \section{Setting up the dictionary}
 \input{dict}
+
+\bibliographystyle{plain}
+\bibliography{article}
 \end{document}
