@@ -1,0 +1,5 @@
+In the \verb!iban! example, the files described in this section
+are created by the script \verb!utils/prepare_lang.sh!.
+Note that in contrast with the scripts mentioned in
+the previous two sections, \verb!utils/prepare_lang.sh!
+is a utility common to all recipes.

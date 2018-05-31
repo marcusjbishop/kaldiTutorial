@@ -1,6 +1,11 @@
 By far, the most onerous and error-prone part of the ASR process
-is in the preparation of the data.
-The starting point will be a number of hours of transcribed speech,
+is in the preparation of the data, which we describe below.
+In the \verb!iban! example,
+all the files mentioned in this section are created by
+the script \verb!data/prepare_data.sh!.
+
+The starting point of ASR consists of
+a number of hours of transcribed speech,
 ideally spoken by of a variety of individuals, some male, and some female.
 The data is divided into {\em utterances},
 each roughly corresponding with a sentence of speech.
