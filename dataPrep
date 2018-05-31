@@ -1,5 +1,3 @@
-By far, the most onerous and error-prone part of the ASR process
-is in the preparation of the data, which we describe below.
 In the \verb!iban! example,
 all the files mentioned in this section are created by
 the script \verb!data/prepare_data.sh!.

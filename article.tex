@@ -3,6 +3,8 @@
 \usepackage[colorlinks=true]{hyperref}
 \usepackage[numbers,sort&compress,]{natbib}
 \usepackage[euler-digits]{eulervm}
+\renewcommand{\sectionautorefname}{\S}
+\renewcommand{\subsectionautorefname}{\S}
 \title{Using \texttt{Kaldi}, a tutorial}
 \author{Sanjeev Khudanpur, Marcus Bishop}
 \begin{document}
@@ -10,21 +12,28 @@
 
 \section{Introduction}
 \input{introduction}
-\section{Overview of the process}
+\subsection{Overview of the process}
 \input{overviewProcess}
-\section{Finite state transducers}
 
-\section{Overview of the \textsf{Kaldi} distribution}
+\section{Overview of \textsf{Kaldi}}
+\input{kaldiIntro}
+\subsection{Contents of the distribution}
 \input{kaldiDistro}
-\section{Contents of a recipe}
+\subsection{Contents of a recipe}
 \input{contentsRecipe}
-\section{Example recipe}
+\subsection{Example recipe}
 \input{ibanDescription}
 
-\section{Setting up data directories}
+\section{Preparing data}
+\input{dataIntro}
+\subsection{Setting up data directories}
 \input{dataPrep}
-\section{Setting up the dictionary}
+\subsection{Setting up the dictionary}\label{dict}
 \input{dict}
+\subsection{Setting up the language}
+\input{lang}
+
+\section{Finite state transducers}
 
 \bibliographystyle{plain}
 \bibliography{article}

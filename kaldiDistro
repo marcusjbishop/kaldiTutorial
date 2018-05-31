@@ -1,4 +1,4 @@
-In contrast with much of the software one runs on large
+In contrast with much of the software running on large
 compute infrastructures,
 in which a system administrator installs the software for everyone to
 use, \textsf{Kaldi} users must download and compile

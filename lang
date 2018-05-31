@@ -3,3 +3,6 @@ are created by the script \verb!utils/prepare_lang.sh!.
 Note that in contrast with the scripts mentioned in
 the previous two sections, \verb!utils/prepare_lang.sh!
 is a utility common to all recipes.
+The script takes the dictionary prepared in \autoref{dict}
+and produces a directory, say, \verb!data/lang! containing the files
+described below.
