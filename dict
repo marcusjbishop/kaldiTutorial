@@ -55,7 +55,7 @@ In the case of \verb!wsj! the pronunciations were extracted
 from a dictionary that \verb!run.sh! downloaded from \verb!cmu.edu!.
 In the case of \verb!iban! the pronunciations were provided
 in the dataset. Another choice is to compose \verb!lexicon.txt!
-by hand in case a pronunciation dictionary is not available.
+by hand in case a pronunciation dictionary is unavailable.
 Still another choice is to simply use the sequence of
 letters of each word as a surrogate for its pronunciation.
 This works well for {\em phonetic} languages
