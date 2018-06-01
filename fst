@@ -66,3 +66,24 @@ an automaton {\em accepts} strings if a sequence of states
 mapping the string to itself exists, and {\em rejects} the string
 otherwise. In this way $T$ defines a language, namely the set
 of all sequences that $T$ accepts.
+
+In the same that mathematical functions can be composed, there is a
+corresponding notion of composition of FSTs.
+To define the composition $T\circ U$
+of two FSTs $T$ and $U$, one needs to specify what the states
+of $T\circ U$ are, and what the transitions between states should
+be. We omit the formal definition, but we require that $T\circ U$
+be set up in such a way that, for any strings $a$ and $c$,
+the composition $T\circ U$ transduces $a$ to $c$ if there is a string $b$
+such that $T(a)=b$ and $U\left(b\right)=c$.
+
+Two further FST operations should be mentioned.
+In case an FST is not deterministic, there is a procedure
+called {\em determinization} which returns a deterministic
+FST which performs the same transductions.
+Also of interest is the process of {\em minimization} of an FST, which
+returns an FST that performs the same transductions, but which contains
+a minimal number of states among all transducers performing the same
+transductions.
+
+\textsf{Kaldi} makes use of \verb!openfst! to implement FSTs.
