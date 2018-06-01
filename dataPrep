@@ -45,12 +45,14 @@ ibf_001_002  selamat malam diatu kami naburka berita ari radio malaysia sarawak 
 \end{verbatim}
 
 In a similarly way, the file \verb!data/train/wav.scp! specifies
-the exact locations of the corresponding audio files. The first
+the exact locations on the filesystem
+of the corresponding audio files. The first
 two lines of this file are shown below.
 \begin{verbatim}
 ibf_001_001 /export/kaldi/egs/iban/s5/corpus/data/wav/ibf_001/ibf_001_001.wav
 ibf_001_002 /export/kaldi/egs/iban/s5/corpus/data/wav/ibf_001/ibf_001_002.wav
 \end{verbatim}
+Note that this file will probably be different on every system.
 
 Also following the same pattern is the file \verb!data/train/utt2spk!,
 which specifies the speaker of each utterance.
