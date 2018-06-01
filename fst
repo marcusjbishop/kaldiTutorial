@@ -87,3 +87,5 @@ a minimal number of states among all transducers performing the same
 transductions.
 
 \textsf{Kaldi} makes use of \verb!openfst! to implement FSTs.
+
+Below we present the FSTs used in ASR.

@@ -1,0 +1,10 @@
+Our first example converts the language models created in
+\autoref{languageModel} into an FSA $G$.
+Considering the bigraphic model, we take the states
+of $G$ to be the vocabulary words, and for each pair of words $w,x$
+we introduce a transition $w\to x$ labeled by ${x:x/w}$ where
+$w=\ln\left(P\left(x\mid w\right)right)$.
+In this way, a string of words will be accepted if there is a path
+through $G$ passing through the words of the sentence, in the same order.
+Furthermore, the weight of this path approximately
+gives the log of the probability of the string.
