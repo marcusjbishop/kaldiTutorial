@@ -3,22 +3,27 @@ and convert it into a complete ASR system.
 The name of the recipe, or rather, the name
 of the directory where the recipe resides,
 usually reflects the dataset.
-For example, the Wallstreet Journal corpus
-is implemented in the directdory \verb!egs/wsj!.
+For example, the recipe based on the Wallstreet Journal corpus
+is implemented in the directory \verb!egs/wsj!.
+In the sequel we will omit the prefix \verb!egs/! of recipe directories.
 
 As mentioned above, the main steps of a recipe are implemented
 as scripts in the \verb!steps! and \verb!utils!
 subdirectories of the recipe. Typically these are symbolic
 links to the corresponding directories of the
 \verb!wsj! recipe. The exact sequence of steps to be taken 
-in converting the dataset to an ASR system is given
-by the main script, \verb!run.sh! appearing at the root level
+in converting the dataset to an ASR system appears in
+the main script, \verb!run.sh!, residing at the root level
 of the recipe, alongside \verb!steps! and \verb!utils!.
+The fact that most recipes share the same \verb!tools! and \verb!utils!
+directories reflects the fact that most ASR tasks consist of the
+same basic sequence of steps, differing only in parameter selection
+and data preparation.
 
 Unfortunately, a new dataset typically arrives in a
 format different from previously
 seen datasets. Therefore, one typically crafts a variety of programs,
-usually in \textsf{Python}, \textsf{Perl}, or \verb!bash! to convert
+usually in \textsf{Python}, \textsf{Perl}, or \verb!bash!, to convert
 the data to the form needed by subsequent parts of the pipeline.
 These scripts are usually found in the \verb!local! directory
 of the recipe.
@@ -36,7 +41,12 @@ The files \verb!cmd.sh! and \verb!path.sh!
 should not be executed, but rather {\em sourced}.
 It is likely that the user will need to modify both of
 these files to reflect the configuration of his or her system.
+We emphasize that the programs in verb!utils! and \verb!tools!
+call one another using only relative pathnames, meaningful only
+after one has set up the \verb!PATH! variable appropriately, which
+is accomplished by sourcing \verb!path.sh!.
 
-Finally, \verb!run.sh! will typically create two new directories,
+Finally, the main program
+\verb!run.sh! will typically create two new directories,
 \verb!data!, where it puts data accumulated and calculated during
 the process, and \verb!exp!, where it also stores higher-level results.
