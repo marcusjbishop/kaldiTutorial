@@ -1,15 +1,17 @@
-In the \verb!iban! example,
-all the files mentioned in this section are created by
+Before proceeding, we remark that in the \verb!iban! example,
+all the files we mention in this section will be created for you by
 the script \verb!data/prepare_data.sh!.
+However, because the user will need to prepare these
+files for a new dataset, it is instructive to inspect them
+and understand their contents.
 
-The starting point of ASR consists of
-a number of hours of transcribed speech,
+The starting point of ASR is a number of hours of transcribed speech,
 ideally spoken by of a variety of individuals, some male, and some female.
-The data is divided into {\em utterances},
+The data are divided into {\em utterances},
 each roughly corresponding with a sentence of speech.
 The utterances are divided into two sets, a training set
-containing $95\%$ of the utterances,
-and a test set containing $5\%$.
+containing around $95\%$ of the utterances,
+and a test set containing around $5\%$.
 Everything calculated for these two sets
 will be stored in the subdirectories \verb!data/train! and \verb!data/test!
 of the recipe respectively. For brevity,
@@ -17,7 +19,7 @@ we will only describe the \verb!data/train! directory,
 but the contents of \verb!data/test! will be exactly the same.
 Note that the \verb!iban! recipe uses \verb!data/dev!
 rather than \verb!data/test!. Some recipes contain {\em both}
-a \verb!data/dev! directory and a \verb!test! directory.
+a \verb!data/dev! directory and a \verb!data/test! directory.
 
 Every utterance is first assigned an {\em utterance ID} using
 whatever scheme is convenient. For example,
@@ -26,26 +28,31 @@ in \verb!iban!. The first \verb!001! refers to the speaker
 and the second to the utterance spoken by this individual.
 Note the zero padding of both integers; this ensures that the \verb!unix!
 \verb!sort! command will sort utterance IDs lexicographically
-in the speaker and utterance. None of the conventions described above
-is imposed, but they are considered good practice.
+in the speaker followed by the utterance, an artifact
+of the labeling scheme which will become important later.
+While \textsf{Kaldi} imposes none of the conventions described above,
+they are considered good practice.
 
 Next, the transcription of each utterance is written, one utterance
 per line, to the file \verb!data/train/text!. Each line
 contains an utterance ID
-followed by a space, followed by the transcription. For example,
-the first two lines of \verb!data/train/text! from \verb!iban! are shown below.
+followed by a space, followed by the corresponding transcription.
+For example, the first two lines of \verb!data/train/text!
+from \verb!iban! are shown below.
 \begin{verbatim}
 ibf_001_001  pukul sepuluh malam  
 ibf_001_002  selamat malam diatu kami naburka berita ari radio malaysia sarawak waifm
 \end{verbatim}
 
 In a similarly way, the file \verb!data/train/wav.scp! specifies
-the exact locations of the corresponding audio files. The first
+the exact locations on the filesystem
+of the corresponding audio files. The first
 two lines of this file are shown below.
 \begin{verbatim}
 ibf_001_001 /export/kaldi/egs/iban/s5/corpus/data/wav/ibf_001/ibf_001_001.wav
 ibf_001_002 /export/kaldi/egs/iban/s5/corpus/data/wav/ibf_001/ibf_001_002.wav
 \end{verbatim}
+Note that this file will probably be different on every system.
 
 Also following the same pattern is the file \verb!data/train/utt2spk!,
 which specifies the speaker of each utterance.
