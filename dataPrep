@@ -2,8 +2,8 @@ Before proceeding, we remark that in the \verb!iban! example,
 all the files we mention in this section will be created for you by
 the script \verb!data/prepare_data.sh!.
 However, because the user will need to prepare these
-files for a new dataset, it is instructive to inspect them
-and understand their contents.
+files when implementing ASR for a new dataset,
+it is instructive to inspect them and understand their contents.
 
 The starting point of ASR is a number of hours of transcribed speech,
 ideally spoken by of a variety of individuals, some male, and some female.
@@ -68,7 +68,7 @@ However, since no such scheme is required, the file
 In inverse of the mapping given by \verb!data/train/utt2spk!
 is given in the file \verb!data/train/spk2utt!, the beginnings of the first
 two lines of which are shown below. This file can be preprepared
-using the utility \verb!utils/spk2utt_to_utt2spk.pl!
+with the help of the utility \verb!utils/spk2utt_to_utt2spk.pl!.
 \begin{verbatim}
 ibf_001 ibf_001_001 ibf_001_002 ibf_001_003 ibf_001_004 ibf_001_005 ...
 ibf_011 ibf_011_001 ibf_011_002 ibf_011_003 ibf_011_004 ibf_011_005 ...

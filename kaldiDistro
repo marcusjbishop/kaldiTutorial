@@ -2,7 +2,7 @@ In contrast with much of the software running on large
 compute infrastructures,
 in which a system administrator installs the software for everyone to
 use, \textsf{Kaldi} users must download and compile
-their own copy of the software.
+their own copies of the software.
 One fetches the repository from
 \href{https://github.com/kaldi-asr/kaldi}{\texttt{github}},
 unpacks it, and compiles it according

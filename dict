@@ -63,7 +63,7 @@ such as Spanish, since each letter is usually
 pronounced in the same way.
 
 Note also that \verb!lexicon.txt! from \verb!iban! also contains
-entries for two special phones, \verb!<sil>! and \verb!<unk>!,
+entries for two special phones, \verb!<sil>! and \verb!<UNK>!,
 both having pronunciation \verb!SIL!.
 We should say more about this here.
 

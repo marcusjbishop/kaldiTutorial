@@ -17,10 +17,10 @@ This will merge the standard output and standard error and save
 them both to the file \verb!log! for later inspection, while also printing
 the same output the your screen.
 You also might find it convenient to run \verb!screen!
-before the command above. In that situation,
+before executing the command above. In that situation,
 in case your session becomes interrupted,
 either intentionally or otherwise,
-you can return later to the same machine and resume with
+you can return later to the same machine and resume the program with
 the command \verb!screen -r!.
 
 The command above will take two or three hours to complete.

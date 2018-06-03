@@ -2,12 +2,13 @@ The purpose of this document is twofold.
 First we intend to summarize the main steps
 of automatic speech recognition (ASR)
 in a mathematically rigorous way for the benefit
-of readers new to speech, but with mathematical backgrounds.
-Second, we will concurrently describe
-how these steps are implemented in the ASR system
+of readers who are new to speech,
+but who have mathematical backgrounds.
+By documenting the entire process from end to end,
+we hope that the document will make ASR more accessible to beginners
+working in technical fields.
+Our second purpose is to concurrently describe
+how each step of the process is implemented in the ASR system
 \textsf{Kaldi} \cite{kaldi}.
 Our hope is that our description of the process will be helpful,
 even if \textsf{Kaldi} changes or becomes obsolete.
-Also, by documenting the entire process from end to end,
-we hope that this document will make \textsf{Kaldi} more accessible
-to beginners.
