@@ -3,7 +3,7 @@
 \usepackage[pdf]{graphviz}
 \usepackage[arrow,matrix]{xy}
 \usepackage{charter,fullpage,multicol}
-\usepackage[colorlinks=true]{hyperref}
+\usepackage[colorlinks=true,citecolor={blue}]{hyperref}
 \usepackage[numbers,sort&compress,]{natbib}
 \usepackage[euler-digits]{eulervm}
 \renewcommand{\sectionautorefname}{\S}
@@ -27,17 +27,21 @@
 \subsection{Example recipe}
 \input{ibanDescription}
 
-\section{Preparing data}
+\section{Preparing data}\label{data}
 \input{dataIntro}
 \subsection{Setting up data directories}
 \input{dataPrep}
 \subsection{Setting up the dictionary}\label{dict}
 \input{dict}
-\subsection{Setting up the language}
+\subsection{Setting up the language model data}
 \input{lang}
 
-\section{Finite state transducers}
+\section{Finite state transducers}\label{fst}
 \input{fst}
+\subsection{The grammar transducer}
+\input{grammar}
+\section{Models}\label{model}
+\section{Decoding}\label{decode}
 
 \bibliographystyle{plain}
 \bibliography{article}
