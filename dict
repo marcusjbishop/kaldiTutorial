@@ -65,7 +65,11 @@ pronounced in the same way.
 Note also that \verb!lexicon.txt! from \verb!iban! also contains
 entries for two special phones, \verb!<sil>! and \verb!<UNK>!,
 both having pronunciation \verb!SIL!.
-We should say more about this here.
+These entries cause Kaldi to invoke special models,
+namely a silence model, which modeles the acoustic properties
+of the speaker's physical environment, and an unknown
+model, to be used for words not found in \verb!lexicon.txt!.
+One could extend this to various types of silence.
 
 Each of the tokens representing phones in \verb!lexicon.txt!
 is expected to be listed in one the files
@@ -74,4 +78,37 @@ is expected to be listed in one the files
 \verb!optional_silence.txt!.
 In this way the phonetic transcriptions can be mapped to integer
 sequences, the integers referring to line numbers in these files.
-We should say more about these files here.
+\verb!silence_phones! specify which phones should invoke the silence model.
+
+\verb!lexiconp.txt! is used to allow a word to have multiple
+pronounciations. After counting, the file specifies relative
+frequencies of each variation, along with the pronounciations
+It also specifies phonemic context, by appending symbols
+\verb!_B! (for word-initial),
+\verb!_I! (for word-internal),
+\verb!_E! (for word-final),
+\verb!_S! (for standalone),
+to the phones.
+This makes it possible to use decision trees to model phones,
+namely, one takes various paths through the tree based on the context
+of the phone, arriving finally a leaf specifying an HMM for the phone
+in its specific context.
+Kaldi figures out this clustering on its own.
+
+The file \verb!extra_quesitons! specifies the mechanism
+used to make decisions about model usage.
+This could used for tonal languages, which distinguish
+rising and falling tones, by adding extra questions to be considered
+in the decision tree.
+
+Homophones are handled using disambugiation symbols.
+Simply specifying phones for words with the same pronounciaion
+will make impossible to distinguish them at decode time.
+Kaldi simply appends special symbols \verb!#1!, \verb!#2!, etc
+to homophones.
+
+\verb!phones.txt! and \verb!words.txt! map all the possible phones
+and words into integers. All references to the phones and words
+should apply the mapping given by these files.
+
+The context-dependent HMMs for phones are specified in \verb!data/lang/topo!

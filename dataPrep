@@ -73,3 +73,11 @@ with the help of the utility \verb!utils/spk2utt_to_utt2spk.pl!.
 ibf_001 ibf_001_001 ibf_001_002 ibf_001_003 ibf_001_004 ibf_001_005 ...
 ibf_011 ibf_011_001 ibf_011_002 ibf_011_003 ibf_011_004 ibf_011_005 ...
 \end{verbatim}
+
+After preparation, features (mfcc vectors representing
+acoustic features are indexed in
+\verb!data/train/feats.scp!
+and cmvn features (cepstral mean and variance)
+are indexed in \verb!data/train/cmvs.scp!.
+Both files list files and byte offsets to files in the root \verb!mfcc!
+directory, indexed by \dots
