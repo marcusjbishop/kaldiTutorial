@@ -1,0 +1,192 @@
+text understanding processes documents, such as menus,
+and retrieives facts, such as location or opening hours
+
+summarazation and language generation involves preparing
+inforatmion for the user by the agent (alexa) in a way nice
+to digest
+
+speech synthesis has come a long way since the early days of telephone
+robot speech; much of this invovles dialogue management
+
+spectrum of applications
+phones used to have touch tone menus that confused people
+so at&t employed a system ("how may I help you") that simply
+asked questions
+
+ibm thought that dictation would be the killer application; it never
+took off, but still provided an interesting challenge
+
+broadcast news transcripts provide closed captioning
+
+conversational telephone speech; doctor-patient interaction falls into this
+category. doctors spend 1/3 of their time with the patient entering
+and retrieving information from the health record system
+
+*****
+
+ease or difficutly of ASR influeced by sevral factors
+parameter \t range
+speaking mode \t ranges from isolated words to continuous speech
+speaking sytle \t ranges from read speech to spontaneous speech
+(asr did better in a study, wer dropped by 50%, when they told speakers
+to simply talk normally)
+enrollment \t ranges from known to unknown speaker
+vocabulary \t ranges from 10000 to a few 100,000 words
+noise level (still a big problem in the area) \t low (>30dB) to high (<10db)
+
+***
+
+He shows us a an example in Garage Band
+
+usually an accepted grammar for the language, consists of words,
+which contain phonemes, which are often pronounced the same way
+we can use prior knowledge from linguistics
+he shows us a parse tree showing the parts of speech of a sentence
+
+phonomes are characterzied by the way the mouth makes sounds
+for example, the p in peter is aspirated, but the p in captain is not
+the rule is to apsirate if in word-initial position, not in internal
+phonomes are equivlalence classes of sounds, where two are inequivalent
+if you can find a pair of words with different pronounciations (?)
+still, he says that aspirated and unaspirated p are the same phone
+in english (but not in hindi)
+
+around the 80's a group at ibm started thinking about speech
+as a communication system, using the source-channel model
+the spaker's mind produces a sequence of words W
+the speaker's producer converts into articulate sounds,which
+pass through the noisy channel
+the acoutisti processor, such as the eardrum, converts the signal
+into features A, which the lingustic decoder finally decodes \hat{W}
+One defines \hat{W} as argmax_W P{W|A}
+using bayes one writes this as argmax_w \frac{P{A|W}P{W}}{P{A}}
+which one simplifies as argmax_W P{A|W}P{W}
+
+So one needs to put together three things:
+1. the language model P(W)
+2. the acoustic model P{A|W}
+3. the way to maximize the arg using a search through possible
+hyphotheses, which is nontrivial, can't be done by brute force
+
+we'll hear about the acoustic model tomorrow
+the signal, say a wav file, sampled at 8000 samples per second
+and we look at a 25ms window, so 200 samples
+think of as a time series. the spectum measures the signal in a differnt
+way, representing as a sum of sine waves of different periods and amplitutes
+
+As an example, he points out that polar coordinates, which gives an alternate
+represnetation of the same point
+now consider the space of continuous functions R\to R
+one represnetaion is the value of the function at every point
+the fourier transform represents a function using a different basis
+its as if each pure sinusoid is its own axis, so a curve with period 20hz
+will, in teh first basis, have a nonzero value at every 20,
+but in the fourier transform, only a single nonzero
+
+he shows us a spectogram of thes same signal (our own folks at home)
+showing the values of the sprecturm at each point in time using color
+he notes that vowels have fatter areas in the lower frequencies,
+but consonatns have random garbage at higher frequencies
+Take \bf{A}(t) to be a vector of spectral energies of the speech
+at time t, one value of A at every 10ms
+\bf{A} has a fixed number of values, say 13, the features, at every time step
+so we think of \bf{A} as an array, time-by-feature
+
+the language model assigns probabilites to sequences of words
+in the language, usually constructed by counting from generic text,
+or transcriptions of task-specific dialogues
+one might desire a generic language model,
+trained on hundreds of millions of text
+but another lesson learned, is that if one wants to transcirbe a particular
+kind of speech, one needs a more targetd corpus
+
+the acoustic model is P{A|W} gives many examples of how each word
+is spoken, in context even, matched acoustic signals to the words
+
+hypthothesis search, in addition the models above, requies a good
+algorithm
+note that a 100000 word vocabulary for a 10 word sentence gives
+100000^10 possiblilites, so one needs a more clever plan to search
+
+W is a sequence of words)
+a seperate model P(A|W) for every W requires many sample of acoustic
+data for every sequence of words W, which is hardly feasable,
+since one will hardly ever see again a given W more than once
+
+even if we chop up the acoustic signal to recognize individiual
+words, P(a,w) still requires many samples of every word
+
+so we fall back to the 50ish phonomes in english, so we build an
+acoustic model for every phonomes, and string them constituent
+phones to makes models of words
+so the model for W is the concatenation of the model for all the phones,
+in the same order
+hmms are attractive because of ease of concatenation
+
+for [ow] for example, the hmm has three states, beginning middle and end
+P(A,S)=\prod_{t=1}^N P_E(a_t|s_t) P_T(s_t|s_{t-1})
+(note that the S includes a time alighment, saying which state
+was at what time)
+One typically models speech as gausian mixtures, but then we need
+to aligh the speech signal to the phones
+in a study several years, jhu ended up payikng $1 per phone
+to have trained phoneticians to do this
+the HMM avoids all this by instead using the baum welch algorithm,
+which ultamately tells us which state produced which sounds
+then no one needs to hand-align
+
+the forward-backward algoritm obviates another issue about summing
+over all state sequences
+
+finally, hmm includes its viterbi (dikjstra outside speech) for computing
+the argmax above
+
+note that the hmm uses a mixtue of gaussians on the acoustic vectors
+today one uses neurla networks instead
+
+***
+
+grammar theory, formal languages, Chomsky, etc, have little success
+in application of speech recogintion
+but simple statistical methods work well, namely markov models
+
+As an example, suppose an urn contains an unknown number of marbles
+of an unknown number of colors, and one samples 10 marbles,
+of them 5 red, 2 green, 3 blue
+one could assign probabilies .5 .2 .3 to those colors
+but this assigns zero probabilty to all unknown colors
+someone proposes 5/11 2/11 3/11 and 1/11 for unknown
+but why is 1/11 the right color for that color?
+perhaps consider the proproportion of past experimets when something
+new occured 3/10
+we're dealing with two problems: assigning probability to unseen colors,
+and dealing with the fact that the number of colors is unknown
+
+for us, the marbles are the words, but the vocablary is unknown,
+so it's unknown how to assign the probbilty of unknown words
+
+to simplify, assume people are very forgetful; they forget
+the antiprevious word at every step
+P(W) = P(w_1,w_2,\ldots,w_N)
+\approx \prod_{i=1}^N P(w_i|w_{i-1},w_{w-2}
+where that P is estimated using relative frequencies f of tupes in the
+training text, so we
+estimate  P(w_i|w_{i-1},w_{i-2}) as
+\lambda_0 1/V
++\lambda_1 f(w_i)
++\labmda_2 f(w_i|w_{i-1}
++\lambda_3 f(w_i|w_{i-1},w_{i-2})
+
+Note that even if this isn't ideal, it's fine if it gives us the
+right answer in the argmax
+
+The search problem uses graph miminimzation from FSA theory
+to further reduce computational burden of the search
+Construct a graph basically encoding the language model
+with, interpeting as a FSA
+with log probabilites on the edges, and finding most likely paths
+However, one needs to incorporte acoustic signal now
+one fills out the graph, pre populated with language model probs,
+and fills in acousic scores as you pass through in the dikjstra algorithm
+Use heuristics to prune unlikely hpyhotehses from teh search
+This is an imporant research area fo real-time  applications
