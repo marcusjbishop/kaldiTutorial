@@ -95,20 +95,56 @@ of the phone, arriving finally a leaf specifying an HMM for the phone
 in its specific context.
 Kaldi figures out this clustering on its own.
 
-The file \verb!extra_quesitons! specifies the mechanism
-used to make decisions about model usage.
-This could used for tonal languages, which distinguish
-rising and falling tones, by adding extra questions to be considered
-in the decision tree.
+After reflecting on one's own speech for a moment, it becomes
+clear that the pronounciation of a given phone varies widely,
+even by the same speaker. \textsf{Kaldi} handles this by creating
+multiple HMMs for each phone, and choosing among them with the help
+of a decision tree. Starting at the root of the tree, one traverses
+the tree, choosing among branches according to responses to specific
+qustions about the usage of the phone, arriving finally at a leaf
+labeled by an HMM
+The questions labeling branch points
+in the tree are listed in the file \verb!extra_quesitons!.
+In case the phones are context-dependent (as in the \verb!iban! example)
+this file would specify branching decisions based on the context
+of the phone, as implemented by the postfixes
+\verb!_B!, \verb!_I!, \verb!_E!, and \verb!_S! mentioned above.
+In the case of a tonal language the file could be used to pose
+questions about rising or falling tone.
 
-Homophones are handled using disambugiation symbols.
-Simply specifying phones for words with the same pronounciaion
-will make impossible to distinguish them at decode time.
-Kaldi simply appends special symbols \verb!#1!, \verb!#2!, etc
-to homophones.
+Only specifying the pronounciation of each word
+would make it impossible to distinguish among homophones, such
+as {\em two} and {\em too}. Kaldi handles this ambiguity
+using disambugiation symbols.
+Namely, it lists each word in \verb!lexiconp_disambig.txt!,
+along with the sequence of phones specifiying its pronounciation,
+now decorated with context dependence postfixes
+\verb!_B!, \verb!_I!, \verb!_E!, and \verb!_S!,
+and with homophones distinguished by appending extra phones
+\verb!#1!, \verb!#2!, etc to the pronounciation strings when needed.
+The first few lines of this file are shown below
+\begin{verbatim}
+<sil> 1.0 SIL_S #1
+<UNK> 1.0 SIL_S #2
+ke  1.0 k_B @_E
+nya 1.0 NJ_B a_I KK_E
+iya 1.0 i_B j_I a_E
+ba  1.0 b_B a_I KK_E #1
+dua 1.0 d_B u_I w_I a_E
+sida  1.0 s_B i_I d_I a_I KK_E
+\end{verbatim}
+Later in the same file one finds the line
+\begin{verbatim}
+bak 1.0 b_B a_I KK_E #2
+\end{verbatim}
+telling us that the words {\em ba} and {\em bak}
+have the same pronounciation.
+Finally the file specifies the proporition of the time
+each instance of a homophone occurs, although these numbers
+have been modified so that the minimum is scaled to \verb!1.0!, I think.
 
 \verb!phones.txt! and \verb!words.txt! map all the possible phones
-and words into integers. All references to the phones and words
-should apply the mapping given by these files.
+and words into integers. All references to phones and words
+apply the mapping given by these files for computational efficiency.
 
 The context-dependent HMMs for phones are specified in \verb!data/lang/topo!
