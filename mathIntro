@@ -1,16 +1,17 @@
 Around 1980 a group at IBM started thinking about speech
 as a communication system, using the {\em source-channel model},
-which we now summarize.
+which we now summarize in this context.
 The {\em speaker} formulates a sequence of words $\mathbold{W}$ in his or her mind.
 The speaker articulates $\mathbold{W}$ using his or her vocal apparatus
-and the resulting sound passes through space, a {\em noisy channel}
-to the {\em interlocutor}, which might be another person, or an ASR system.
+and the resulting sound passes through space, a {\em noisy channel},
+to the {\em interlocutor}, which might be another person, or an ASR system
+such as \textsf{Kaldi}.
 The interlocutor is equipped with an {\em acoustic processor} which turns
 the signal into a sequence of vectors $\mathbold{A}$ capturing
 {\em acoustic features} of the signal at multiple timesteps.
 The acoustic processor could be the auditory system of a human,
-or it could be a computer program performing steps vaguely reflecting
-the auditory system of a human.
+or it could be a computer program performing, whose design is often motivated
+by the human auditory system.
 Finally, a {\em linguistic decoder} converts $\mathbold{A}$ into
 a hypothesis $\widehat\mathbold{W}$ by the formula
 \begin{equation}\label{FirstArgmax}
@@ -36,3 +37,4 @@ So one needs to assemble the following models to implement ASR as described abov
 We remark that \autoref{argmax} is nontrivial in light
 of the sheer number of possible hyphotheses, which renders it
 impossible to calculate the $\argmax$ by brute force.
+We consider each of these subproblems in the following sections.

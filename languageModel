@@ -1,0 +1,29 @@
+For a fixed natural number~$N$, an {\em $N$-gram language model}
+is simply a function that maps any $N$~words
+$w_1,w_2,\ldots,w_N$ to the probability of $w_N$ appearing
+immediately after a consecutive occurrence of $w_1w_2\cdots w_{N-1}$,
+in exactly that order.
+The model is usually denoted by
+$P\left(w_N\vert w_1,w_2,\ldots,w_{N_1}\right)$,
+with the understanding
+that $w_1,w_2,\ldots,w_N$ are the arguments of the function.
+
+One approximates
+$P\left(w_N\vert w_1,w_2,\ldots,w_{N_1}\right)$
+as the ratio of the number of occurrences
+of $w_1w_2\cdots w_N$ by the number of occurrences
+of $w_1w_2\cdots w_{N_1}$ in a fixed training corpus.
+Note that this calculation depends strongly on the training corpus,
+so it becomes important for the corpus to reflect the style
+of writing one is trying to model.
+
+One refers to 
+$P\left(w_N\vert w_1,w_2,\ldots,w_{N_1}\right)$
+as a {\em grammar} inasmuch as it communicates which sequences
+of words are to be considered valid sentences in the language
+being modeled by simply assigning probabilities to any sequence
+of words. Word sequences with low probability might fail to be
+valid sentences in the language.
+Note that 
+$P\left(w_N\vert w_1,w_2,\ldots,w_{N_1}\right)$
+knows knothing about subjects, predicates, and such.
