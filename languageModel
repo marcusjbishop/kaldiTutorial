@@ -1,0 +1,69 @@
+For a fixed inteber~$N\ge 1$, an {\em $N$-gram language model}
+is simply a function that maps any $N$-tuple
+$w_1,w_2,\ldots,w_N$ of words to the probability that
+someone speaking or writing in the language would use the word $w_N$
+immediately after $w_1w_2\cdots w_{N-1}$, in exactly that order.
+The model is usually denoted by
+$P\left(w_N\;\middle\vert\;w_1,w_2,\ldots,w_{N-1}\right)$,
+with the understanding
+that $w_1,w_2,\ldots,w_N$ are the arguments of the function,
+not necessarily the first~$N$ words of a text corpus.
+In the case $n=1,2,3$ the model is called a
+{\em unigram}, {\em bigram}, {\em trigram} model, respectively.
+
+One refers to 
+$P\left(w_N\;\middle\vert\;w_1,w_2,\ldots,w_{N-1}\right)$
+as a {\em grammar} because it specifies which sequences
+of words should be considered valid sentences in the language.
+It does this by assigning a probability to any sequence
+of words; word sequences with low probability fail to be
+valid sentences in the language. Note that 
+$P\left(w_N\;\middle\vert\;w_1,w_2,\ldots,w_{N-1}\right)$
+is not a grammar in the linguistic sense of 
+subjects, predicates, and such.
+
+One approximates
+$P\left(w_N\;\middle\vert\;w_1,w_2,\ldots,w_{N-1}\right)$
+as the ratio of the number of occurrences
+of $w_1w_2\cdots w_N$ by the number of occurrences
+of $w_1w_2\cdots w_{N-1}$ in a fixed training corpus.
+However, this approximation has a number
+of shortcomings.
+Firstly, the words $w_1,w_2,\ldots,w_N$ are limited to
+those occurring in the training corpus, almost
+certainly a non-exhaustive vocabulary source.
+Furthermore, as described above, the model is only able to define
+$P\left(w_N\;\middle\vert\;w_1,w_2,\ldots,w_{N-1}\right)$
+in the case that $w_1w_2\cdots w_{N-1}$ actually occurs in the training corpus,
+and in this case, the model posits that
+$P\left(w_N\;\middle\vert\;w_1,w_2,\ldots,w_{N-1}\right)=0$
+unless $w_1w_2\cdots w_N$ actually occurs in the corpus.
+
+In practice one mitigates both problems by {\em smoothing} the model
+using any one of a number of techniques. This has the effect of assigning
+a small probability to word sequences not occurring in the document.
+
+Note also that the calculation above depends strongly on the training corpus,
+so it becomes important for the corpus to reflect the style
+of writing one is trying to model.
+In the case of ASR this can be accomplished
+by taking the text corpus
+to be the collection of transcriptions of the provided audio recordings,
+because the resulting model with then naturally
+reflect the type of speech being modeled.
+
+In practice such a model can be supplemented by a separate model trained
+on a large text corpus, not necessarily the transcriptions of any audio
+recording. In this case the models should be {\em interpolated} using one
+of a number of techniques. It might be tempting to instead simply train a single
+model on the concatenation of the transcript and the external text.
+However, the model being primarily count-based,
+the counts from the (generally much larger) external text would
+greatly exceed those from the transcript, resulting in a model more reflective
+of the external document.
+
+For example, in the \verb!iban! recipe,
+presumably because speakers of the Iban language are not amply available,
+and in any case, transcribing audio is an expensive process,
+the recipe interpolates the model trained on transcripts with another
+model trained on an external text corpus.

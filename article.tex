@@ -2,12 +2,14 @@
 \usepackage{graphicx}
 \usepackage[pdf]{graphviz}
 \usepackage[arrow,matrix]{xy}
-\usepackage{charter,fullpage,multicol}
+\usepackage{charter,fullpage,multicol,amsmath}
 \usepackage[colorlinks=true,citecolor={blue}]{hyperref}
 \usepackage[numbers,sort&compress,]{natbib}
 \usepackage[euler-digits]{eulervm}
+\renewcommand{\itemautorefname}{}
 \renewcommand{\sectionautorefname}{\S}
 \renewcommand{\subsectionautorefname}{\S}
+\DeclareMathOperator*{\argmax}{argmax}
 \title{Using \texttt{Kaldi}, a tutorial}
 \author{Sanjeev Khudanpur, Marcus Bishop}
 \begin{document}
@@ -35,6 +37,11 @@
 \input{dict}
 \subsection{Setting up the language model data}
 \input{lang}
+
+\section{Overview of the mathematics of ASR}
+\input{mathIntro}
+\subsection{The language model}\label{LM}
+\input{languageModel}
 
 \section{Finite state transducers}\label{fst}
 \input{fst}

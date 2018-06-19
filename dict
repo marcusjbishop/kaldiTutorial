@@ -1,6 +1,6 @@
-Next we prepare the pronunciation dictionary, which
-we will assume to be located at \verb!data/local/dict!, so all the files
-described below will be assumed to reside in that directory.
+Next we prepare the pronunciation dictionary. 
+This consists of a directory \verb!data/local/dict!
+containing all the filew described in this section.
 In the \verb!iban! example the files described in this section
 are created by the script \verb!local/prepare_dict.sh!.
 
@@ -12,16 +12,19 @@ of the most common words, so it would be natural
 to first order all the words of \verb!data/train/text! by
 their frequencies, and then select, say, the 10,000 most common words
 to be included in \verb!lexicon.txt!.
-Note that the lexicon does {\em not} explicitly contain words
+Note that the lexicon should {\em not} explicitly contain words
 from \verb!data/test/text!. This affords the opportunity
 to invoke another mechanism during testing,
-namely the {\em unknown model},
-whenever out-of-vocabulary words are encountered.
+namely the {\em unknown model}, which will be used to determine
+the pronounciations of out-of-vocabulary words.
 
 Each line of \verb!lexicon.txt! contains a word, followed by a space or tab,
 followed by a sequence of phones, represented by tokens taken from a fixed
 pronunciation alphabet.
-For example, the first ten lines of the file are shown
+The choice of this alphabet is not imposed by \textsf{Kaldi}, provided
+that each phone is transcribed consistantly every time it appears
+in a word.
+For example, the first ten lines of \verb!lexicon.txt! are shown
 below, from \verb!iban! on the left, and from \verb!wsj! on the right.
 
 \begin{multicols}{2}
@@ -65,11 +68,10 @@ pronounced in the same way.
 Note also that \verb!lexicon.txt! from \verb!iban! also contains
 entries for two special phones, \verb!<sil>! and \verb!<UNK>!,
 both having pronunciation \verb!SIL!.
-These entries cause Kaldi to invoke special models,
-namely a silence model, which modeles the acoustic properties
-of the speaker's physical environment, and an unknown
-model, to be used for words not found in \verb!lexicon.txt!.
-One could extend this to various types of silence.
+These entries cause \textsf{Kaldi} to invoke special models,
+namely the {\em silence model}, which modeles the acoustic properties
+of the speaker's physical environment, and the unknown
+model mentioned above.
 
 Each of the tokens representing phones in \verb!lexicon.txt!
 is expected to be listed in one the files
@@ -79,32 +81,23 @@ is expected to be listed in one the files
 In this way the phonetic transcriptions can be mapped to integer
 sequences, the integers referring to line numbers in these files.
 \verb!silence_phones! specify which phones should invoke the silence model.
+Multiple types of silence could be modeled by introducing
+special symbols in the file \verb!optional_silence!.
+However, in the \verb!iban! example both
+\verb!silence_phones.txt! and \verb!optional_silence.txt!
+contain only \verb!SIL!.
 
-\verb!lexiconp.txt! is used to allow a word to have multiple
-pronounciations. After counting, the file specifies relative
-frequencies of each variation, along with the pronounciations
-It also specifies phonemic context, by appending symbols
-\verb!_B! (for word-initial),
-\verb!_I! (for word-internal),
-\verb!_E! (for word-final),
-\verb!_S! (for standalone),
-to the phones.
-This makes it possible to use decision trees to model phones,
-namely, one takes various paths through the tree based on the context
-of the phone, arriving finally a leaf specifying an HMM for the phone
-in its specific context.
-Kaldi figures out this clustering on its own.
-
-After reflecting on one's own speech for a moment, it becomes
-clear that the pronounciation of a given phone varies widely,
+The pronounciation of a given phone varies widely,
 even by the same speaker. \textsf{Kaldi} handles this by creating
 multiple HMMs for each phone, and choosing among them with the help
 of a decision tree. Starting at the root of the tree, one traverses
 the tree, choosing among branches according to responses to specific
 qustions about the usage of the phone, arriving finally at a leaf
-labeled by an HMM
+labeled by an HMM.
 The questions labeling branch points
 in the tree are listed in the file \verb!extra_quesitons!.
+
+One frequent source of phonemic variation is the context of a phone.
 In case the phones are context-dependent (as in the \verb!iban! example)
 this file would specify branching decisions based on the context
 of the phone, as implemented by the postfixes
@@ -112,9 +105,20 @@ of the phone, as implemented by the postfixes
 In the case of a tonal language the file could be used to pose
 questions about rising or falling tone.
 
+The file \verb!lexiconp.txt! is used to allow a word to have multiple
+pronounciations. After counting occurances of each variation
+in the training corpus, the file specifies its relative
+frequency along with its pronounciation.
+It also specifies phonemic context, by appending symbols
+\verb!_B! (for word-initial),
+\verb!_I! (for word-internal),
+\verb!_E! (for word-final),
+\verb!_S! (for standalone),
+to the phones. This mechanism will be described below.
+
 Only specifying the pronounciation of each word
 would make it impossible to distinguish among homophones, such
-as {\em two} and {\em too}. Kaldi handles this ambiguity
+as {\em two} and {\em too}. \textsf{Kaldi} handles this ambiguity
 using disambugiation symbols.
 Namely, it lists each word in \verb!lexiconp_disambig.txt!,
 along with the sequence of phones specifiying its pronounciation,

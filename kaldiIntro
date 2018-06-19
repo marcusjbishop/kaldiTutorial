@@ -1,5 +1,5 @@
-\textsf{Kaldi} is an ASR toolkit consisting of a variety
-of shell scripts and compiled \texttt{C++} programs.
+\textsf{Kaldi} is a state-of-the-art ASR toolkit consisting of a variety
+of shell scripts and \texttt{C++} programs.
 \textsf{Kaldi} is published on
 \href{https://github.com/kaldi-asr/kaldi}{\texttt{github}}
 under the
@@ -8,8 +8,8 @@ and is maintained by researchers at
 \href{https://www.jhu.edu}{Johns Hopkins University}.
 It has been widely adopted in both academics and industry.
 
-\textsf{Kaldi} has also been recently shown to be an effective
-optical character recognition (OCR) engine. While this might sound
-surprising, it is quite natural in light of the similarity
-of the ASR and OCR tasks, as we discuss below.
+%\textsf{Kaldi} has also been recently shown to be an effective
+%optical character recognition (OCR) engine. While this might sound
+%surprising, it is quite natural in light of the similarity
+%of the ASR and OCR tasks, as we discuss below.
 

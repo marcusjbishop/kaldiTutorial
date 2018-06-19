@@ -23,7 +23,7 @@ and data preparation.
 
 Unfortunately, a new dataset typically arrives in a
 format different from previously
-seen datasets. Therefore, one typically crafts a variety of programs,
+handled datasets. Therefore, one typically crafts a variety of programs,
 usually in \textsf{Python}, \textsf{Perl}, or \verb!bash!, to convert
 the data to the form needed by subsequent parts of the pipeline.
 These scripts are unique to the recipe
@@ -35,7 +35,8 @@ in such a way that the scripts in
 the \verb!steps! and \verb!utils! directories
 will be able to locate relevant executables.
 The file \verb!cmd.sh! is used to select how multiprocess jobs
-will be called. The file simply sets a variable to either
+will be scheduled for execution.
+The file simply sets a variable to either
 \verb!run.pl! (for local execution) or \verb!queue.pl!
 (for execution by multiple nodes of a cluster).
 The files \verb!cmd.sh! and \verb!path.sh!

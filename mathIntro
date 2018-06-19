@@ -1,0 +1,42 @@
+Around 1980 a group at IBM started thinking about speech
+as a communication system, using the {\em source-channel model},
+which we now summarize in this context.
+The {\em speaker} formulates a sequence of words $\mathbold{W}$ in his or her mind,
+and articulates $\mathbold{W}$ using his or her vocal apparatus.
+The resulting sound passes through space, a {\em noisy channel},
+to the {\em interlocutor}, which might be another person, or an ASR system
+such as \textsf{Kaldi}.
+The interlocutor is equipped with an {\em acoustic processor} which turns
+the signal into a sequence of vectors $\mathbold{A}$ capturing
+{\em acoustic features} of the signal at multiple timesteps.
+The acoustic processor could be the auditory system of a human,
+or it could be a computer program, whose design is often motivated
+by the human auditory system.
+Finally, a {\em linguistic decoder} converts $\mathbold{A}$ into
+a hypothesis $\widehat\mathbold{W}$ by the formula
+\begin{equation}\label{FirstArgmax}
+\widehat\mathbold{W}=\argmax_{\mathbold{W}}
+P\left(\mathbold{W}\;\middle\vert\;\mathbold{A}\right).
+\end{equation}
+It is convenient to rewrite \autoref{FirstArgmax} using Bayes rule as
+\[\widehat\mathbold{W}=\argmax_{\mathbold{W}}
+\frac{ P\left(\mathbold{A}\;\middle\vert\;\mathbold{W}\right) P\left(\mathbold{W}\right)}
+{P\left(\mathbold{A}\right)} \]
+which further simplifies to
+\[\widehat\mathbold{W}=\argmax_{\mathbold{W}}
+P\left(\mathbold{A}\;\middle\vert\;\mathbold{W}\right)
+P\left(\mathbold{W}\right)\]
+since $\mathbold{A}$ is taken to be fixed throughout the process
+of decoding $\mathbold{A}$.
+
+Therefore one needs to assemble the following models
+in order to implement ASR as described above.
+\begin{enumerate}
+\item the {\em language model} $P\left(\mathbold{W}\right)$
+\item the {\em acoustic model} $P\left(\mathbold{A}\;\middle\vert\;\mathbold{W}\right)$
+\item\label{argmax} a way to calculate the $\argmax$ in \autoref{FirstArgmax}
+\end{enumerate}
+We remark that \autoref{argmax} is nontrivial in light
+of the sheer number of possible hypotheses, which renders it
+impossible to calculate the $\argmax$ by brute force.
+We consider each of these subproblems in the following sections.

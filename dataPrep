@@ -1,14 +1,16 @@
 Before proceeding, we remark that in the \verb!iban! example,
 all the files we mention in this section will be created for you by
-the script \verb!data/prepare_data.sh!.
-However, because the user will need to prepare these
+the script \verb!data/prepare_data.sh!, which in turn
+will be called for you by the program \verb!run.sh!.
+However, because the user will need to prepare the corresponding
 files when implementing ASR for a new dataset,
 it is instructive to inspect them and understand their contents.
 
 The starting point of ASR is a number of hours of transcribed speech,
 ideally spoken by of a variety of individuals, some male, and some female.
 The data are divided into {\em utterances},
-each roughly corresponding with a sentence of speech.
+each roughly corresponding with a sentence of speech
+and contained in its own \verb!*.wav! file.
 The utterances are divided into two sets, a training set
 containing around $95\%$ of the utterances,
 and a test set containing around $5\%$.
@@ -26,8 +28,9 @@ whatever scheme is convenient. For example,
 \verb!ibf_001_001! is the first utterance ID
 in \verb!iban!. The first \verb!001! refers to the speaker
 and the second to the utterance spoken by this individual.
-Note the zero padding of both integers; this ensures that the \verb!unix!
-\verb!sort! command will sort utterance IDs lexicographically
+Note the zero padding of both integers; this ensures that the
+\verb!sort! command in \verb!unix!
+will sort utterance IDs lexicographically
 in the speaker followed by the utterance, an artifact
 of the labeling scheme which will become important later.
 While \textsf{Kaldi} imposes none of the conventions described above,
@@ -44,7 +47,7 @@ ibf_001_001  pukul sepuluh malam
 ibf_001_002  selamat malam diatu kami naburka berita ari radio malaysia sarawak waifm
 \end{verbatim}
 
-In a similarly way, the file \verb!data/train/wav.scp! specifies
+In a similar way, the file \verb!data/train/wav.scp! specifies
 the exact locations on the filesystem
 of the corresponding audio files. The first
 two lines of this file are shown below.
@@ -52,7 +55,8 @@ two lines of this file are shown below.
 ibf_001_001 /export/kaldi/egs/iban/s5/corpus/data/wav/ibf_001/ibf_001_001.wav
 ibf_001_002 /export/kaldi/egs/iban/s5/corpus/data/wav/ibf_001/ibf_001_002.wav
 \end{verbatim}
-Note that this file will probably be different on every system.
+Note that this file will probably be different on every system
+because of its references to the local filesystem.
 
 Also following the same pattern is the file \verb!data/train/utt2spk!,
 which specifies the speaker of each utterance.
@@ -74,10 +78,24 @@ ibf_001 ibf_001_001 ibf_001_002 ibf_001_003 ibf_001_004 ibf_001_005 ...
 ibf_011 ibf_011_001 ibf_011_002 ibf_011_003 ibf_011_004 ibf_011_005 ...
 \end{verbatim}
 
-After preparation, features (mfcc vectors representing
-acoustic features are indexed in
-\verb!data/train/feats.scp!
-and cmvn features (cepstral mean and variance)
-are indexed in \verb!data/train/cmvs.scp!.
+This concludes the preparation of the acoustic data.
+At this point the main script \verb!run.pl!
+calculates acoustic features. These are indexed in the file
+\verb!data/train/feats.scp!, excerpted below.
+\begin{verbatim}
+ibf_002_001 /export/kaldi/egs/iban/s5/mfcc/raw_mfcc_train.1.ark:12
+ibf_002_002 /export/kaldi/egs/iban/s5/mfcc/raw_mfcc_train.1.ark:13877
+\end{verbatim}
+It also calculates various statistics about these features,
+the so-called CMVN (cepstral mean and variance) features.
+These are given in the file
+\verb!data/train/cmvs.scp!, excerpted below.
+\begin{verbatim}
+ibf_002 /export/kaldi/egs/iban/s5/mfcc/cmvn_train.ark:8
+ibf_003 /export/kaldi/egs/iban/s5/mfcc/cmvn_train.ark:255
+\end{verbatim}
 Both files list files and byte offsets to files in the root \verb!mfcc!
-directory, indexed by \dots
+directory, indexed by utterance in the case of \verb!feats.scp!
+and by speaker in the case of \verb!cmvs.scp!.
+
+
