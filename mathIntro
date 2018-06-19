@@ -1,10 +1,11 @@
-Around 1980 a group at IBM started thinking about speech
+Around 1980 IBM started thinking of speech
 as a communication system, using the {\em source-channel model},
 which we now summarize in this context.
-The {\em speaker} formulates a sequence of words $\mathbold{W}$ in his or her mind,
-and articulates $\mathbold{W}$ using his or her vocal apparatus.
+A {\em speaker} formulates a sequence of words
+$\mathbold{W}$ in his or her mind,
+and then articulates $\mathbold{W}$ using various vocal mechanisms.
 The resulting sound passes through space, a {\em noisy channel},
-to the {\em interlocutor}, which might be another person, or an ASR system
+to an {\em interlocutor}, which might be another person, or an ASR system
 such as \textsf{Kaldi}.
 The interlocutor is equipped with an {\em acoustic processor} which turns
 the signal into a sequence of vectors $\mathbold{A}$ capturing
@@ -12,8 +13,8 @@ the signal into a sequence of vectors $\mathbold{A}$ capturing
 The acoustic processor could be the auditory system of a human,
 or it could be a computer program, whose design is often motivated
 by the human auditory system.
-Finally, a {\em linguistic decoder} converts $\mathbold{A}$ into
-a hypothesis $\widehat\mathbold{W}$ by the formula
+Finally, a {\em decoder} converts $\mathbold{A}$ into
+a hypothesis $\widehat\mathbold{W}$ using the formula
 \begin{equation}\label{FirstArgmax}
 \widehat\mathbold{W}=\argmax_{\mathbold{W}}
 P\left(\mathbold{W}\;\middle\vert\;\mathbold{A}\right).
@@ -29,7 +30,7 @@ P\left(\mathbold{W}\right)\]
 since $\mathbold{A}$ is taken to be fixed throughout the process
 of decoding $\mathbold{A}$.
 
-Therefore one needs to assemble the following models
+Therefore one needs to assemble the following things
 in order to implement ASR as described above.
 \begin{enumerate}
 \item the {\em language model} $P\left(\mathbold{W}\right)$
