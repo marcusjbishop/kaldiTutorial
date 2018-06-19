@@ -1,7 +1,11 @@
 Next we prepare the pronunciation dictionary. 
-This consists of a directory \verb!data/local/dict!
-containing all the filew described in this section.
-In the \verb!iban! example the files described in this section
+Its purpose is to supply the mapping from the transcription text
+in \verb!data/local/text! to a sequence of phones, each of which
+in turn corresponds with a hidden Markov model providing
+the phone's pronunciation.
+The dictionary consists of a directory \verb!data/local/dict!
+containing all the files described in this section.
+In the \verb!iban! example these files
 are created by the script \verb!local/prepare_dict.sh!.
 
 First one prepares a file \verb!lexicon.txt! specifying
@@ -16,13 +20,13 @@ Note that the lexicon should {\em not} explicitly contain words
 from \verb!data/test/text!. This affords the opportunity
 to invoke another mechanism during testing,
 namely the {\em unknown model}, which will be used to determine
-the pronounciations of out-of-vocabulary words.
+the pronunciations of out-of-vocabulary words.
 
 Each line of \verb!lexicon.txt! contains a word, followed by a space or tab,
 followed by a sequence of phones, represented by tokens taken from a fixed
 pronunciation alphabet.
-The choice of this alphabet is not imposed by \textsf{Kaldi}, provided
-that each phone is transcribed consistantly every time it appears
+The choice of this alphabet is not imposed by \textsf{Kaldi}, but should
+be such that each phone is transcribed consistently every time it appears
 in a word.
 For example, the first ten lines of \verb!lexicon.txt! are shown
 below, from \verb!iban! on the left, and from \verb!wsj! on the right.
@@ -69,7 +73,7 @@ Note also that \verb!lexicon.txt! from \verb!iban! also contains
 entries for two special phones, \verb!<sil>! and \verb!<UNK>!,
 both having pronunciation \verb!SIL!.
 These entries cause \textsf{Kaldi} to invoke special models,
-namely the {\em silence model}, which modeles the acoustic properties
+namely the {\em silence model}, which models the acoustic properties
 of the speaker's physical environment, and the unknown
 model mentioned above.
 
@@ -78,55 +82,58 @@ is expected to be listed in one the files
 \verb!nonsilence_phones.txt!,
 \verb!silence_phones.txt!, or
 \verb!optional_silence.txt!.
-In this way the phonetic transcriptions can be mapped to integer
+In this way phonetic transcriptions can be mapped to integer
 sequences, the integers referring to line numbers in these files.
-\verb!silence_phones! specify which phones should invoke the silence model.
+The file \verb!silence_phones! specifies
+which phones should invoke the silence model.
 Multiple types of silence could be modeled by introducing
 special symbols in the file \verb!optional_silence!.
 However, in the \verb!iban! example both
 \verb!silence_phones.txt! and \verb!optional_silence.txt!
 contain only \verb!SIL!.
 
-The pronounciation of a given phone varies widely,
+The pronunciation of a given phone varies widely,
 even by the same speaker. \textsf{Kaldi} handles this by creating
 multiple HMMs for each phone, and choosing among them with the help
-of a decision tree. Starting at the root of the tree, one traverses
+of a {\em decision tree}. Starting at the root of the tree, one traverses
 the tree, choosing among branches according to responses to specific
-qustions about the usage of the phone, arriving finally at a leaf
+questions about the usage of the phone, arriving finally at a leaf
 labeled by an HMM.
 The questions labeling branch points
 in the tree are listed in the file \verb!extra_quesitons!.
 
 One frequent source of phonemic variation is the context of a phone.
-In case the phones are context-dependent (as in the \verb!iban! example)
-this file would specify branching decisions based on the context
+If this is the case (as it is in the \verb!iban! example)
+\verb!extra_quesitons! would specify branching decisions based on the context
 of the phone, as implemented by the postfixes
-\verb!_B!, \verb!_I!, \verb!_E!, and \verb!_S! mentioned above.
-In the case of a tonal language the file could be used to pose
-questions about rising or falling tone.
-
-The file \verb!lexiconp.txt! is used to allow a word to have multiple
-pronounciations. After counting occurances of each variation
-in the training corpus, the file specifies its relative
-frequency along with its pronounciation.
-It also specifies phonemic context, by appending symbols
 \verb!_B! (for word-initial),
 \verb!_I! (for word-internal),
 \verb!_E! (for word-final),
-\verb!_S! (for standalone),
-to the phones. This mechanism will be described below.
+\verb!_S! (for standalone).
+In the case of a tonal language the file could be used to pose
+questions about rising or falling tone.
 
-Only specifying the pronounciation of each word
+This concludes the preparation of the dictionary directory.
+Next the main script \verb!run.sh! calls \verb!utils/prepare_lang.sh!
+which creates the remainder of the files described in this section.
+
+The file \verb!lexiconp.txt! is used to allow a word to have multiple
+pronunciations. After counting occurrences of each variation
+in the training corpus, the file specifies its relative
+frequency along with its pronunciation sequence, now decorated
+by the various symbols enumerated in \verb!extra_questions!.
+
+Merely specifying the pronunciation of each word
 would make it impossible to distinguish among homophones, such
-as {\em two} and {\em too}. \textsf{Kaldi} handles this ambiguity
+as the English words {\em two} and {\em too}.
+\textsf{Kaldi} handles this ambiguity
 using disambugiation symbols.
 Namely, it lists each word in \verb!lexiconp_disambig.txt!,
-along with the sequence of phones specifiying its pronounciation,
-now decorated with context dependence postfixes
-\verb!_B!, \verb!_I!, \verb!_E!, and \verb!_S!,
-and with homophones distinguished by appending extra phones
-\verb!#1!, \verb!#2!, etc to the pronounciation strings when needed.
-The first few lines of this file are shown below
+along with the sequence of phones specifying its pronunciation,
+as listed in \verb!lexiconp.txt!, now
+with homophones distinguished by appending special tokens
+\verb!#1!, \verb!#2!, etc to the pronunciation strings when needed.
+For example, the first few lines of this file are shown below.
 \begin{verbatim}
 <sil> 1.0 SIL_S #1
 <UNK> 1.0 SIL_S #2
@@ -142,13 +149,72 @@ Later in the same file one finds the line
 bak 1.0 b_B a_I KK_E #2
 \end{verbatim}
 telling us that the words {\em ba} and {\em bak}
-have the same pronounciation.
-Finally the file specifies the proporition of the time
+have the same pronunciation.
+Finally the file specifies the proportion of the time
 each instance of a homophone occurs, although these numbers
-have been modified so that the minimum is scaled to \verb!1.0!, I think.
+have been modified so that the minimum is scaled to \verb!1.0!.
 
 \verb!phones.txt! and \verb!words.txt! map all the possible phones
 and words into integers. All references to phones and words
 apply the mapping given by these files for computational efficiency.
 
-The context-dependent HMMs for phones are specified in \verb!data/lang/topo!
+Finally, the \verb!data/lang/topo! specifies the initial HMM
+for each phone in each of its variations.
+Here \verb!topo! stands for {\em topology} the term not used
+in its normal mathematical usage.
+Rather than display the file, we interpret it as follows.
+Each non-silence phone will be modeled by an HMM
+whose transitions $a_{ij}$ are initially as
+shown in \autoref{NonSilence}
+and whose emission probabilities $b_t\left(j\right)$
+are referenced in the file.
+Each silence phone is initially given a more complicated topology,
+whose transitions are shown in \autoref{Silence}.
+
+\begin{figure}
+\label{NonSilence}
+\begin{center}
+\digraph[scale=0.5]{nonsilenceHmm}{
+rankdir=LR;
+{ node [shape="doublecircle"] 3;}
+{ node [shape="circle"] 0 1 2}
+0->0 [label="0.75"];
+0->1 [label="0.25"];
+1->1 [label="0.75"];
+1->2 [label="0.25"];
+2->2 [label="0.75"];
+2->3 [label="0.25"];
+}
+\end{center}
+\caption{Hidden Markov model for a nonsilence phone}
+\end{figure}
+
+\begin{figure}
+\label{Silence}
+\begin{center}
+\digraph[scale=0.5]{silenceHmm}{
+rankdir=LR;
+{ node [shape="doublecircle"] 5;}
+{ node [shape="circle"] 0 1 2 3 4}
+0->0 [label="0.25"];
+0->1 [label="0.25"];
+0->2 [label="0.25"];
+0->3 [label="0.25"];
+1->1 [label="0.25"];
+1->2 [label="0.25"];
+1->3 [label="0.25"];
+1->4 [label="0.25"];
+2->1 [label="0.25"];
+2->2 [label="0.25"];
+2->3 [label="0.25"];
+2->4 [label="0.25"];
+3->1 [label="0.25"];
+3->2 [label="0.25"];
+3->3 [label="0.25"];
+3->4 [label="0.25"];
+4->4 [label="0.25"];
+4->5 [label="0.75"];
+}
+\end{center}
+\caption{Hidden Markov model for a silence phone}
+\end{figure}
