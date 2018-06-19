@@ -69,7 +69,7 @@ from any utterance ID because of the labeling schemes chosen.
 However, since no such scheme is required, the file
 \verb!data/train/utt2spk! is necessary.
 
-In inverse of the mapping given by \verb!data/train/utt2spk!
+The inverse of the mapping given by \verb!data/train/utt2spk!
 is given in the file \verb!data/train/spk2utt!, the beginnings of the first
 two lines of which are shown below. This file can be preprepared
 with the help of the utility \verb!utils/spk2utt_to_utt2spk.pl!.
@@ -80,22 +80,22 @@ ibf_011 ibf_011_001 ibf_011_002 ibf_011_003 ibf_011_004 ibf_011_005 ...
 
 This concludes the preparation of the acoustic data.
 At this point the main script \verb!run.pl!
-calculates acoustic features. These are indexed in the file
-\verb!data/train/feats.scp!, excerpted below.
+calculates the MFCC features of the audio files.
+These are indexed in the file \verb!data/train/feats.scp!, excerpted below.
 \begin{verbatim}
 ibf_002_001 /export/kaldi/egs/iban/s5/mfcc/raw_mfcc_train.1.ark:12
 ibf_002_002 /export/kaldi/egs/iban/s5/mfcc/raw_mfcc_train.1.ark:13877
 \end{verbatim}
 It also calculates various statistics about these features,
 the so-called CMVN (cepstral mean and variance) features.
-These are given in the file
+These are indexed in the file
 \verb!data/train/cmvs.scp!, excerpted below.
 \begin{verbatim}
 ibf_002 /export/kaldi/egs/iban/s5/mfcc/cmvn_train.ark:8
 ibf_003 /export/kaldi/egs/iban/s5/mfcc/cmvn_train.ark:255
 \end{verbatim}
-Both files list files and byte offsets to files in the root \verb!mfcc!
-directory, indexed by utterance in the case of \verb!feats.scp!
+Both files list files the locations on the filesystem
+of the corresponding feature files in the \verb!mfcc! directory,
+and the byte offsets in those files
+indexed by utterance in the case of \verb!feats.scp!
 and by speaker in the case of \verb!cmvs.scp!.
-
-

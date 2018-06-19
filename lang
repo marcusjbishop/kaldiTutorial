@@ -11,15 +11,3 @@ described below.
 \verb!utils/prepare_lang.sh! takes the dictionary prepared
 in \autoref{dict} and creates the data to be used in traning
 the language model.
-
-By default each non-silence phone will be modeled by an HMM
-with three hidden states and transistions as shown below.
-\digraph[scale=0.5]{nonsilenceHmm}{
-rankdir=LR;
-{ node [shape="doublecircle"] 3;}
-{ node [shape="circle"] 1 2}
-1->1;
-1->2;
-2->2;
-2->3;
-}
