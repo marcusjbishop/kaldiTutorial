@@ -1,7 +1,7 @@
 In contrast with much of the software running on large
 compute infrastructures,
 in which a system administrator installs the software for everyone to
-use, \textsf{Kaldi} users must download and compile
+use, \textsf{Kaldi} users generally download and compile
 their own copies of the software.
 One fetches the repository from
 \href{https://github.com/kaldi-asr/kaldi}{\texttt{github}},
@@ -12,10 +12,13 @@ file at the top level of the distribution.
 Also at the top level are the following directories.
 The \verb!src! directory contains the source code for the main
 binary programs, which one finds in \verb!src/bin! after compilation.
-Users call some of these commands directly, but many of them are called by
-scripts, as described below.
+Users call some of these commands directly, but more commonly,
+these commands are invoked by various shell
+scripts, since those commands often require unwieldy command-line arguments
+and must chained together.
 
-The \verb!tools! directory contains a handful of language modeling and
+The \verb!tools! and \verb!extras!
+directories contains a handful of language modeling and
 finite state transducer utilities.
 
 Finally, the \verb!egs! directory contains a few dozen example
@@ -23,4 +26,5 @@ ASR systems, each presented in its own subdirectory as a {\em recipe}.
 The contents of a recipe are described below, but we mention
 here that the scripts mentioned above are essentially shared
 by all recipes and live in subdirectories of each recipe
-called \verb!steps! and \verb!utils!.
+called \verb!steps! and \verb!utils!, rather than a common
+location, such as \verb!src/bin! as one might expect.
